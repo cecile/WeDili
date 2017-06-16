@@ -1,213 +1,59 @@
-// Contact Form Scripts
-$(function() {
+var countEmail = 0;
 
-    $("#envoiMessage input,#envoiMessage textarea").jqBootstrapValidation({
-        preventSubmit: true,
-        submitError: function($form, event, errors) {
-            // additional error messages or events
-        },
-        submitSuccess: function($form, event) {
+function addEmail() {
+    countEmail = countEmail + 1;
+    $('.blockEmail').append('<input class="envoyerA" onchange="addEmail();" id="destinataire'+ countEmail+'" type="text" name="destinataire1">');
+}
+
+var countFichier = 0;
+
+function  addInput(){
+    countFichier = countFichier + 1;
+    $('.blockUpload').append('<input class="upload" onclick="addInput();" id="fichier'+ countFichier +'" type="file" name="fichier[]">');
+}
+
+$('form').submit( function(event){
+
             event.preventDefault(); // prevent default submit behaviour
-            // get values from FORM
-            
-            form = $('form');
-            formdata = new FormData(form[0]);
-            data=formdata;
+            // get values from FORM         
+            var monForm = $('form');
+            var formdata = new FormData(monForm[0]);
+            var data = formdata;
 
             $.ajax({
-                url: "contact_me.php",
-                method: "POST",
-                contentType: false,
-                processData: false,
-                data: data,
-                dataType: 'json',
-                cache: false,
-                success: function() {
-                    // Success message
-                    $('#success').html("<div class='alert alert-success'>");
-                    $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                        .append("</button>");
-                    $('#success > .alert-success')
-                        .append("<strong>Votre article a été posté. </strong>");
-                    $('#success > .alert-success')
-                        .append('</div>');
-
-                    //clear all fields
-                    $('#envoiMessage').trigger("reset");
-                },
-                error: function() {
-                    // Fail message
-                    $('#success').html("<div class='alert alert-danger'>");
-                    $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                        .append("</button>");
-                    // $('#success > .alert-danger').append("<strong>Sorry " + firstName + ", it seems that my mail server is not responding. Please try again later!");
-                    $('#success > .alert-danger').append('</div>');
-                    //clear all fields
-                    $('#envoiMessage').trigger("reset");
-                },
-
-               
-            });
-
-        },
-        filter: function() {
-            return $(this).is(":visible");
-        },
-    });
-
-    $("a[data-toggle=\"tab\"]").click(function(e) {
-        e.preventDefault();
-        $(this).tab("show");
-    });
-});
-
-/*When clicking on Full hide fail/success boxes */
-$('#name').focus(function() {
-    $('#success').html('');
-});
-
-$(".formControl").change(function(){
-                var champ = $('<input>');
-                var nbInput = 0;
-                nbInput++;
-                champ.attr('type', 'file');
-                champ.attr('name', 'fichier'+nbInput);
-                champ.appendTo('form');
+            url: "http://vesoul.codeur.online/front/lgwendal/newwedili.MGC/contact_me.php",
+            type: "POST",
+            dataType : 'json', 
+            contentType: false, 
+            processData: false,
+            data: data,
+            cache: false,
+            success: function(data) {
+                // Success message
+                $('#success').html("<div class='alert alert-success'>");
+                $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+                    .append("</button>");
+                $('#success > .alert-success')
+                    .append("<strong>Votre article a été posté. </strong>");
+                $('#success > .alert-success')
+                    .append('</div>');
+                //clear all fields
+                $('#contactForm').trigger("reset");
+            },
+            error: function(data) {
+                // Fail message
+                $('#success').html("<div class='alert alert-danger'>");
+                $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+                    .append("</button>");
+                $('#success > .alert-danger').append("<strong>Désolé le serveur ne répond pas, réessayez plus tard !");
+                $('#success > .alert-danger').append('</div>');
+                //clear all fields
+                $('#contactForm').trigger("reset");
+            },
+        });
 });
                          
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
-                         
+                                                  
 /************JS DRAG AND DROP ***********************/
                          
 
